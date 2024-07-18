@@ -1,0 +1,100 @@
+import random
+import string
+
+class Bank:
+  def __init__(self,account_number,account_holder):
+    self.account_number = account_number
+    self.account_holder = account_holder
+    self.balance = 0.0
+
+  def deposit(self,amount):
+    if amount>0:
+      self.balance+=amount
+      print(f"Amount ${amount} deposited successfully. New Balance ${self.balance}")
+    else:
+      print("Invalid amount.Please deposit a positive amount.")
+
+  def withdraw(self,amount):
+    if amount>0 and amount<= self.balance:
+      self.balance-=amount
+      print(f"Withdrawal of ${amount} successfull. Remaining Balance: ${self.balance}")
+    else:
+      print("Insufficient Balance or Invalid Amount.")
+
+  def check_balance(self):
+    print(f"Account Balance: ${self.balance}")
+
+  def apply_for_loan(self,loan_amount):
+    if loan_amount>0:
+      self.balance+=loan_amount
+      print(f"Loan for ${loan_amount} applied Succesfully.New Balance: ${self.balance}")
+    else:
+      print("Enter a valid amount.")
+
+  def send_money(self,recipient,amount):
+    if amount>0 and amount<=self.balance:
+      self.balance-=amount
+      recipient+=amount
+      print(f"${amount} transferred to {recipient}.Remaining Balance: ${self.balance}")
+    else:
+      print("Insufficient Balance or Invalid Amount.")
+def generate_account_number():
+  return ''.join(random.choices(string.digits,k=8))
+
+
+accounts = {}
+
+if __name__ == "__main__":
+ while True:
+    print('Welcome to the Banking System:')
+    print("What would you like to do:")
+    print("1. Create Account(Account Number)")
+    print("2.Login to existing account")
+    print("3.Exit")
+    choice = input("Enter your choice 1/2/3:")
+    if choice == "1":
+      account_holder = input("Enter your account holder name: ")
+      account_number = generate_account_number()
+      new_account = Bank(account_number,account_holder)
+      accounts[account_number]=new_account
+      print(f"Account created successfully! Your account number is: {account_number}")
+
+    elif choice == "2":
+      account_number = input("Enter your account number: ")
+      if account_number in accounts:
+        account= accounts[account_number]
+        print("Login Successfull")
+        while True:
+         print("What would you like to do:")
+         print("1.Deposit Money")
+         print("2.Withdraw Money")
+         print("3.Check Balance")
+         print("4.Apply for loan")
+         print("5 Send Money")
+         print("6.Exit the application")
+         choice = input("Enter your choice 1/2/3/4/5: ")
+         if choice == "1":
+           amount= float(input("Enter the deposit amount: "))
+           account.deposit(amount)
+         elif choice == "2":
+           amount= float(input('Enter the deposit amount: '))
+           account.withdraw(amount)
+         elif choice == "3":
+           account.check_balance()
+         elif choice == "4":
+             loan_amount = float(input("Enter the loan amount: "))
+             account.apply_for_loan(loan_amount)
+         elif choice == "5":
+           recipient = int(input("Enter the Recipients Account Number: "))
+           amount = float(input("Enter the amount to send: "))
+           account.send_money(recipient,amount)
+         elif choice == "6":
+           break
+         else:
+           print("Invalid Choice.Pls try again")
+      else: 
+        print("Account Number not found.Please ensure you are entering the correct details.")
+    elif choice =="3":
+     break
+    else:
+     print("Invalid Choice.Please try again.")
