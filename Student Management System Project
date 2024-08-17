@@ -2,11 +2,12 @@ import random
 import string
 
 class Management:
-  def __init__(self,enrollment_no,student_name,book_list):
+  def __init__(self,enrollment_no,student_name,book_list,subject_list):
    self.enrollment_no = enrollment_no
    self.student_name = student_name
    self.book_list = book_list
    self.rented_book = {}
+   self.subject_list = subject_list
 
   def display_books(self):
     if not self.book_list:
@@ -42,12 +43,20 @@ class Management:
   def give_feedback(self):
     feedback = input("Please give your feedback: ")
     print("Thank you for your feedback")
+
+  def display_subject(self):
+    if not self.subject_list:
+      print("No books are available in the library.")
+    else:
+     for subject in self.subject_list:
+      print(subject)
+ 
 def generate_enrollment_no():
   return ''.join(random.choices(string.ascii_letters + string.digits, k=8))    
 
 if __name__ == '__main__':
   students = {}
-  books = Management("StudentManagementSystem","Library Management",["Python","Harry Potter","Java Script","DSA","C++","Demon Slayer"])
+  books = Management("StudentManagementSystem","Library Management",["Python","Harry Potter","Java Script","DSA","C++","Demon Slayer"],["Python Advanced","English","Mathematcis","Science","Computer Technologies"])
   
   while True:
     print("Welcome to Student Management System")
@@ -59,7 +68,7 @@ if __name__ == '__main__':
     if choice == "2":
       student_name = input("Enter your name:")
       enrollment_no = generate_enrollment_no()
-      students[enrollment_no]=Management(enrollment_no,student_name,books)
+      students[enrollment_no]=Management(enrollment_no,student_name,books,books.subject_list)
       print("Your enrollment_no. is:",enrollment_no)
     elif choice == "1":
      enrollment_no = input("Enter your enrollment_no.: ")
@@ -70,7 +79,8 @@ if __name__ == '__main__':
         print("What would you like to do?")
         print("1. Access Library")
         print("2. Give Feedback")
-        print("3. Exit")
+        print("3. Display Subjects")
+        print("4. Exit")
         choice = input("Enter your choice 1/2/3:")
         if choice == "1":
           print("Welcome to your personal library")
@@ -97,9 +107,11 @@ if __name__ == '__main__':
             break
         elif choice == "2":
           student.give_feedback()
-        elif choice == "3":
+        elif choice == "4":
           print("Thank you for using our Library Management System")
           break
+        elif choice == "3":
+          student.display_subject()  
         else:
           print("Invalid Choice")
     elif choice == "3":
