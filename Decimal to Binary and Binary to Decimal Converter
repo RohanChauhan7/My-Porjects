@@ -1,0 +1,36 @@
+def binary_converter(decimal_number):
+  if decimal_number == 0:
+   return "0"
+
+  binary_number = []
+
+  while decimal_number > 0:
+    remainder = decimal_number %2
+    binary_number.append(str(remainder))
+    decimal_number //= 2
+
+  binary_number.reverse()
+  return ''.join(binary_number)
+
+
+def decimal_converter(binary_string):
+    try:
+      decimal_number = int(binary_string, 2)
+      return decimal_number
+    except ValueError:
+      return "Invalid binary number"
+
+print("Hello Welcome to Binary Converter Software")
+print("What would you like to do:")
+print("1. Convert a Decimal Number to Binary")
+print("2.Convert a Binary Number to Decimal")
+choice = input("Enter your Choice: ")
+
+if choice == "1":
+ number = int(input("Enter a number: "))
+ print(binary_converter(number))
+
+elif choice == "2":
+ binary_string = input("Enter Binary Number: ")
+ result = decimal_converter(binary_string)
+ print("Decimal:", result)
